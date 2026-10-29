@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+}
+
+enum QuestionType {
+  MCQ
+  TRUE_FALSE
+  SITUATION
+}
+
+enum QuestionStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(EMPLOYEE)
+  createdAt DateTime @default(now())
+
+  attempts  Attempt[]
+}
+
+model Question {
+  id              Int            @id @default(autoincrement())
+  question       String
+  type           QuestionType
+  category       String
+
+  optionA        String?
+  optionB        String?
+  optionC        String?
+  optionD        String?
+
+  correctAnswer  String?
+  expectedAnswer String?
+  explanation    String?
+
+  points          Int            @default(10)
+  status          QuestionStatus @default(ACTIVE)
+  createdAt       DateTime       @default(now())
+
+  attempts        Attempt[]
+}
+
+model Attempt {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  questionId Int
+
+  answer     String
+  score      Int      @default(0)
+  points     Int      @default(0)
+  feedback   String?
+
+  reviewStatus String?
+  reviewedAt   DateTime?
+
+  date       DateTime @default(now())
+
+  employee   User     @relation(fields: [employeeId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id])
+}

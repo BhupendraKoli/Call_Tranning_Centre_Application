@@ -39,3 +39,47 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+node_modules/
+dist/
+.env
+
+# SQLite database files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Local backups
+*.sqlite
+*.sqlite3
+# SQLite database files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Local database
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Generated files
+.next/
+node_modules/
+*.tsbuildinfo
+
+!.env.example
+.agents/
+.claude/
+.cursor/
+.devin/
+prisma-8.md
+/tsconfig.tsbuildinfo
